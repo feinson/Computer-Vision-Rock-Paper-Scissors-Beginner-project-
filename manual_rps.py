@@ -5,8 +5,11 @@ def get_computer_choice():
 
     return random.choice(list_of_moves)
 
+
 def show_please_enter():
+
     print("Please enter either 1, 2 or 3.\n")
+
 
 def get_user_choice():
 
@@ -44,6 +47,7 @@ def get_winner(computer_choice, user_choice):
         return
 
     elif hierarchy.index(computer_choice) + 1 == hierarchy.index(user_choice,1):
+        
         print("You lost")
         return computer_choice
         
