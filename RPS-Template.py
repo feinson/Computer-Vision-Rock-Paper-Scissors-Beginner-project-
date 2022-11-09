@@ -12,9 +12,15 @@ while True:
     normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
     data[0] = normalized_image
     prediction = model.predict(data)
+    
+    choices_list = ['Rock', 'Paper', 'Scissors', 'Nothing']
+    choice = choices_list[prediction.argmax()]
+    print(f"You chose {choice}")
+
     cv2.imshow('frame', frame)
     # Press q to close the window
-    print(prediction)
+    #print(prediction)
+    
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
             
