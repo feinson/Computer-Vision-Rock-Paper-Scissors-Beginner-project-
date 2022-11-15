@@ -1,11 +1,11 @@
 # Computer Vision RPS
 
-## Model training
-The model was created using the website teachablemachine.withgoogle.com.
-The model was trained to sort images into one of four classes: rock, paper, scissors and nothing. The training set was images of me making the signs into my webcam. The model seems to work great for pictures of me holding up the symbol, but given an unfamiliar setting it might be a bit haphazard. This could of course be improved by providing a much larger training set.
-
 ## manual_rps.py 
 The manual rock-paper-scissors programme uses OOP to create a game where the user chooses their option within the terminal. It's best of 1.
 
-## camera_rps.py
-The camera rock-paper-scissors programme uses computer vision to create a game where the user chooses their option by intereacting with the camera. This uses the model that wast trained previously. Honestly, the code for this project is a bit ugly, but I'm really happy with the resulting functionality. Doing everything in OOP would be more "correct" I'm sure but the programme seems to run fine without it.
+## camera_rps_v1.py (personal model-based)
+The camera rock-paper-scissors programme uses computer vision to create a game where the user chooses their option by intereacting with the camera. This uses a model built using the the website 'teachablemachine.withgoogle.com'. The readability of the code for this project could be improved, for example, by avoiding lots of try and except statements. Programming anything involving a continous while loop will involve solving the challenge of everything continuously updating, but there are better solutions to use in the future. A downside of this script, over camera_rps_v2.py is that the model was trained on pictures of myself, which means it may not work on other people very well.
+
+## camera_rps_v2.py (cvzone based)
+This script makes use of the library 'cvzone' in order to make more accurate predictions about the hand position. It is also not reliant on a specific person's training set, and therefore has the advantage that it should work equally well for everyone.
+
