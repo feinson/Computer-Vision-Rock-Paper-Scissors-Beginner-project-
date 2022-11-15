@@ -7,7 +7,7 @@ from cvzone.HandTrackingModule import HandDetector
 cap = cv2.VideoCapture(0)
 #data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 list_of_moves = ['Rock', 'Paper', 'Scissors', 'Nothing']
-list_of_comp_moves=['Rock', 'Paper', 'Scissors']
+list_of_comp_moves = ['Rock', 'Paper', 'Scissors']
 
 detector = HandDetector(maxHands=1)
 
@@ -41,8 +41,8 @@ def get_winner(computer_choice, user_choice):
             #print("You won!")
             return 1
 
-computer_score=0
-user_score=0
+computer_score = 0
+user_score = 0
 toggle = False
 finished = False
 
