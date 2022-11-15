@@ -107,15 +107,10 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
          break
 
-print(computer_score)
-print(user_score)
+# print(computer_score)
+# print(user_score)
 # After the loop release the cap object
 cap.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
 
-
-
-
-
-get_prediction(frame)
