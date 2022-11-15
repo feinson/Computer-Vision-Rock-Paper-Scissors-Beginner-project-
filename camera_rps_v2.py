@@ -2,8 +2,6 @@ import cv2
 import numpy as np
 import time
 import random
-import mediapipe
-import cvzone
 from cvzone.HandTrackingModule import HandDetector
 
 cap = cv2.VideoCapture(0)
@@ -82,7 +80,7 @@ while True:
             if count_down < -3:
                 result=get_winner(computer_choice,user_choice)
                 if result ==1:
-                    computer_score += 1
+                    user_score += 1
                 elif result == -1:
                     computer_score +=1
                 #print("we got to here")
