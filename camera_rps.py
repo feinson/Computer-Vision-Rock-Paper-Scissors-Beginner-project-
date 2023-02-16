@@ -1,22 +1,29 @@
 import cv2
-from keras.models import load_model
 import numpy as np
 import time
 import random
+from cvzone.HandTrackingModule import HandDetector
 
-model = load_model('keras_model.h5')
 cap = cv2.VideoCapture(0)
-data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
+#data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 list_of_moves = ['Rock', 'Paper', 'Scissors', 'Nothing']
-list_of_comp_moves=['Rock', 'Paper', 'Scissors']
+list_of_comp_moves = ['Rock', 'Paper', 'Scissors']
 
-def get_prediction(frame):
-    resized_frame = cv2.resize(frame, (224, 224), interpolation = cv2.INTER_AREA)
-    image_np = np.array(resized_frame)
-    normalized_image = (image_np.astype(np.float32) / 127.0) - 1 # Normalize the image
-    data[0] = normalized_image
-    prediction = model.predict(data)
-    choice = list_of_moves[prediction.argmax()]
+detector = HandDetector(maxHands=1)
+
+def get_prediction(frame,hands):
+    
+    hand = hands[0]
+    fingers = detector.fingersUp(hand)
+    if sum(fingers) == 0:
+        index = 0
+    elif sum(fingers) == 2:
+        index = 2
+    elif sum(fingers) == 5:
+        index = 1
+    else:
+        index = 3
+    choice = list_of_moves[index]
     #print(f"You chose {choice}")
     return choice
 
@@ -35,19 +42,20 @@ def get_winner(computer_choice, user_choice):
             #print("You won!")
             return 1
 
-computer_score=0
-user_score=0
+computer_score = 0
+user_score = 0
 toggle = False
 finished = False
 
 x=time.time()
 while True:
     ret, frame = cap.read()
+    hands, img = detector.findHands(frame)
     cv2.putText(frame, "(Best of three)", (200,40),cv2.FONT_HERSHEY_COMPLEX, 0.7, (0,0,255),2)
 
     if (computer_score>1 or user_score>1):
         if computer_score>user_score:
-            cv2.putText(frame, "Oh dear. Computer Wins :( ", (150,200),cv2.FONT_HERSHEY_COMPLEX, 1.2, (0,0,255),3)
+            cv2.putText(frame, "Oh dear. Computer Wins :( ", (70,200),cv2.FONT_HERSHEY_COMPLEX, 1, (0,0,255),2)
         if computer_score<user_score:
             cv2.putText(frame, "You Win!", (200,200),cv2.FONT_HERSHEY_COMPLEX, 1.2, (0,255,0),3)
         finished = True
@@ -84,7 +92,7 @@ while True:
                     
         except:
             computer_choice = random.choice(list_of_comp_moves)
-            user_choice = get_prediction(frame)
+            user_choice = get_prediction(frame,hands)
             
 
     comp_score_str = f"Computer Score: {computer_score}"
@@ -100,15 +108,9 @@ while True:
     if cv2.waitKey(1) & 0xFF == ord('q'):
          break
 
-print(computer_score)
-print(user_score)
+
 # After the loop release the cap object
 cap.release()
 # Destroy all the windows
 cv2.destroyAllWindows()
 
-
-
-
-
-get_prediction(frame)
